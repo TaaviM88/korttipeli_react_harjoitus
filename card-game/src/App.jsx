@@ -1,8 +1,17 @@
+import './App.css';
+import Card from './components/Card'
+
+const playerCard = {
+  image: 'http://placekitten.com/120/100',
+  stats:[{name: 'Cuteness', value: 10}]
+}
 
 export default function App(){
   return(
     <>
-      <h1>Hello world</h1>
+    <div id="game">
+      <Card card = {playerCard}/>
+    </div>
     </>
   );
 }
