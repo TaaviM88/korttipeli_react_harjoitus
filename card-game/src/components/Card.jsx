@@ -5,10 +5,12 @@ export default function Card({card}){
         <div className="card">
            <img src={card.image}></img>
             <ul className="stat-list">
-                <li className="stat-list-item">
-                    <span>{card.stats[0].name}</span>
-                    <span>{card.stats[0].value}</span>
+                {card.stats.map((stat, index) => (
+                <li className="stat-list-item" key={index}>
+                    <span>{stat.name}</span>
+                    <span>{stat.value}</span>
                 </li>
+                ))}
             </ul>
         </div>
     );

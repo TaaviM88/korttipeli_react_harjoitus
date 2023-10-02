@@ -1,3 +1,9 @@
+#root {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
 .card {
   /* Give dimensions to the card */
   width: 120px;
@@ -25,4 +31,27 @@
   /* Remove default spacing around lists and add some padding to the sides */
   margin: 0;
   padding: 0 8px;
+}
+
+#center-area{
+  text-align: center;
+  align-self: center;
+  min-width: 10vw;
+}
+
+#game{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.card-list {
+  display: flex;
+}
+
+.card-list-item.player {
+  margin-left: calc(2vw - 140px);
+}
+
+.card-list-item.opponent {
+  margin-right: calc(2vw - 140px);
 }
