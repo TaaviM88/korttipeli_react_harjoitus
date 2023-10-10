@@ -1,5 +1,6 @@
 import './App.css';
 import Card from './components/Card'
+import PlayButton from './components/PlayButton';
 import { useState } from 'react';
 
 const getRandomInt =(min, max)=>
@@ -37,10 +38,19 @@ const deck = Array(16).fill(null).map((_,index) =>createCard(index));
 const half = Math.ceil(deck.length / 2);
 
 const dealCards = ()=>{
+  shuffle(deck);
   return{
     player: deck.slice(0,half),
     opponent: deck.slice(half)
   }
+}
+
+function shuffle(array){
+  for(let i = array.length -1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i +1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 export default function App(){
@@ -61,28 +71,34 @@ export default function App(){
     <>
     <h1>Pelin nimi</h1>
     <div id="game">
-      <p>Player Cards</p>
-      <ul className='card-list'>
-        {cards.player.map(pCard =>(
-          <li className='card-list-item player' key={pCard.id}>
-            <Card card = {pCard}/>
-          </li>
-        ))}
-      </ul>
+      <div className="hand pelaaja">
+        <p>Player Cards</p>
+        <ul className='card-list'>
+          {cards.player.map((pCard, index) =>(
+            <li className='card-list-item player' key={pCard.id}>
+              <Card card = { index === 0 ? pCard : null}/>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div id="center-area">
         <p>{result || 'Press the button'}</p>
-        <button onClick={compareCards} type="button">Play</button>
+        <PlayButton text={'Play'} handleClick={compareCards}/>
       </div>
-      <p>Opponent Cards</p>
-      <ul className='card-list'>
-        {cards.opponent.map(opponentCard =>(
-          <li className='card-list-item opponent' key={opponentCard.id}>
-            <Card card = {opponentCard}/>
-          </li>
-        ))}
-      </ul>
-      {console.log(dealCards())}
+
+      <div className="hand">
+        <p>Opponent Cards</p>
+        <ul className='card-list opponent'>
+          {cards.opponent.map(oCard =>(
+            <li className='card-list-item opponent' key={oCard.id}>
+              <Card card = {oCard}/>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
+
     </>
   );
 }

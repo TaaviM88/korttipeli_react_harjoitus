@@ -1,9 +1,3 @@
-#root {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
 .card {
   /* Give dimensions to the card */
   width: 120px;
@@ -19,7 +13,9 @@
   /* If the image goes over the borders */
   overflow: hidden;
 }
-
+.card.back{
+  background-color: blueviolet;
+}
 .stat-list-item {
   /* Remove bullet points */
   list-style: none;
@@ -46,12 +42,37 @@
 }
 .card-list {
   display: flex;
+  flex-direction: row-reverse;
 }
 
 .card-list-item.player {
-  margin-left: calc(2vw - 140px);
+  margin-left: calc(6vw - 150px);
+}
+
+.card-list.opponent {
+  /* Reverse direction */
+  direction: rtl;
 }
 
 .card-list-item.opponent {
-  margin-right: calc(2vw - 140px);
+  margin-right: calc(6vw - 150px);
+  /* Direction must be reversed again to display text correctly */
+  direction: ltr;
+}
+.play-button {
+  width: 80px;
+  height: 40px;
+  align-self: center;
+  font-size: larger;
+  font-weight: bold;
+}
+
+
+.hand {
+  display: flex;
+  flex-direction: column;
+  min-width: 40vw;
+}
+.hand.pelaaja > h2 {
+  align-self: end;
 }
