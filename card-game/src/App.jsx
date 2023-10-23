@@ -56,17 +56,25 @@ function shuffle(array){
 export default function App(){
   const[cards, setCards] = useState(dealCards);
   const[result, setResult] = useState('');
-
+  const[gameState, setGameState] = useState('play');
   function compareCards(){
    
     const playerStat = cards.player[0].stats[0];
-    const opponentStat = cards.opponent.stats[0];
+    const opponentStat = cards.opponent[0].stats[0];
     if(playerStat.value === opponentStat.value) setResult("draw");
     else if(playerStat.value > opponentStat.value) setResult("win");
     else setResult('loss');
-
+    setGameState('result');
   }
 
+  function nextRound(){
+    setCards(cards =>{
+      // video 4 time: 1h06min
+    })
+    setGameState('play');
+    setResult('');
+  }
+  
   return(
     <>
     <h1>Pelin nimi</h1>
@@ -84,15 +92,19 @@ export default function App(){
 
       <div id="center-area">
         <p>{result || 'Press the button'}</p>
-        <PlayButton text={'Play'} handleClick={compareCards}/>
+        {
+          gameState === 'play'?(<PlayButton text={'Play'} handleClick={compareCards}/>) : 
+          (<PlayButton text={'Next'} handleClick={nextRound}/>)
+        }
+        
       </div>
 
       <div className="hand">
         <p>Opponent Cards</p>
         <ul className='card-list opponent'>
-          {cards.opponent.map(oCard =>(
+          {cards.opponent.map((oCard, index) =>(
             <li className='card-list-item opponent' key={oCard.id}>
-              <Card card = {oCard}/>
+              <Card card = {index === 0 ? oCard : null}/>
             </li>
           ))}
         </ul>
