@@ -76,3 +76,12 @@
 .hand.pelaaja > h2 {
   align-self: end;
 }
+
+.stat-list-item.selected {
+  outline: 1px solid black;
+  background-color: #f1efe2;
+}
+.card-list-item.player .stat-list-item:hover {
+  outline: 1px dashed black;
+  background-color: #fafafa;
+}

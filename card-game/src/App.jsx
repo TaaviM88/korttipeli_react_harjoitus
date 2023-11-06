@@ -60,8 +60,8 @@ export default function App(){
   const[selectedStat, setSelected] = useState(0);
   function compareCards(){
    
-    const playerStat = cards.player[0].stats[0];
-    const opponentStat = cards.opponent[0].stats[0];
+    const playerStat = cards.player[0].stats[selectedStat];
+    const opponentStat = cards.opponent[0].stats[selectedStat];
     if(playerStat.value === opponentStat.value) setResult("draw");
     else if(playerStat.value > opponentStat.value) setResult("win");
     else setResult('loss');
@@ -70,7 +70,6 @@ export default function App(){
 
   function nextRound(){
     setCards(cards =>{
-      // video 4 time: 1h06min
       const playedCards = [{...cards.player[0]},{...cards.opponent[0]}];
       const player = cards.player.slice(1);
       const opponent = cards.opponent.slice(1);
@@ -106,10 +105,12 @@ export default function App(){
     <div id="game">
       <div className="hand pelaaja">
         <p>Player Cards</p>
-        <ul className='card-list'>
+        <ul  className='card-list'>
           {cards.player.map((pCard, index) =>(
-            <li className='card-list-item player' key={pCard.id}>
-              <Card card = { index === 0 ? pCard : null}/>
+            <li style={{zIndex: -index}} className='card-list-item player' key={pCard.id}>
+              <Card card = { index === 0 ? pCard : null}
+              handleSelect={statIndex => gameState === 'play' && setSelected(statIndex)}
+              selectedStat={selectedStat}/>
             </li>
           ))}
         </ul>
@@ -128,7 +129,7 @@ export default function App(){
         <p>Opponent Cards</p>
         <ul className='card-list opponent'>
           {cards.opponent.map((oCard, index) =>(
-            <li className='card-list-item opponent' key={oCard.id}>
+            <li style={{zIndex: -index}} className='card-list-item opponent' key={oCard.id}>
               <Card card = {index === 0 ? oCard : null}/>
             </li>
           ))}
