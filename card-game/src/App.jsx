@@ -58,6 +58,17 @@ export default function App(){
   const[result, setResult] = useState('');
   const[gameState, setGameState] = useState('play');
   const[selectedStat, setSelected] = useState(0);
+
+  if(gameState !== 'game_over' && (!cards.opponent.length || !cards.player.length)){
+    setResult(() =>{
+      console.log(!cards.player.length, !cards.opponent.length);
+      if(!cards.opponent.length) return 'Player win!';
+      else if (!cards.player.length) return 'Player loss';
+      return 'Draw';
+    });
+    setGameState('game_over');
+  }
+
   function compareCards(){
    
     const playerStat = cards.player[0].stats[selectedStat];
@@ -99,6 +110,12 @@ export default function App(){
     setResult('');
   }
   
+  function restartGame(){
+    setCards(dealCards);
+    setResult('');
+    setGameState('play');
+  }
+
   return(
     <>
     <h1>Pelin nimi</h1>
@@ -120,6 +137,9 @@ export default function App(){
         <p>{result || 'Press the button'}</p>
         {
           gameState === 'play'?(<PlayButton text={'Play'} handleClick={compareCards}/>) : 
+          gameState === 'game_over'  ?
+          (<PlayButton text={'Restart'} handleClick={restartGame}/>)
+           :
           (<PlayButton text={'Next'} handleClick={nextRound}/>)
         }
         
@@ -130,7 +150,7 @@ export default function App(){
         <ul className='card-list opponent'>
           {cards.opponent.map((oCard, index) =>(
             <li style={{zIndex: -index}} className='card-list-item opponent' key={oCard.id}>
-              <Card card = {index === 0 ? oCard : null}/>
+              <Card card = { result &&index === 0 ? oCard : null}/>
             </li>
           ))}
         </ul>
