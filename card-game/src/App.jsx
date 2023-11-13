@@ -2,6 +2,7 @@ import './App.css';
 import Card from './components/Card'
 import PlayButton from './components/PlayButton';
 import { useState } from 'react';
+import {cardsData} from './components/CardDatabase';
 
 const getRandomInt =(min, max)=>
   Math.floor(Math.random() * (max -min +1)+min);
@@ -25,16 +26,16 @@ const opponentCard = {
 
 const createCard = index => ({
   id: crypto.randomUUID(),
-  name: 'Lorem ipsum',
-  image: "http://placekitten.com/120/100?image="+index, //`http://placekitten.com/120/100?image=${index}`
-  stats:[
-    {name: 'Cuteness', value: getRandomInt(1, 500), max: 500 },
-    {name: 'Speed', value: getRandomInt(1, 500), max: 500 },
-    {name: 'Weight', value: getRandomInt(1, 500), max: 500 }
-  ]
+  name: cardsData[index].name,
+  image: cardsData[index].image,
+  stats: [
+    { name: cardsData[index].stats[0].name, value: cardsData[index].stats[0].value },
+    { name: cardsData[index].stats[1].name, value: cardsData[index].stats[1].value },
+    { name: cardsData[index].stats[2].name, value: cardsData[index].stats[2].value },
+  ],
 });
 
-const deck = Array(16).fill(null).map((_,index) =>createCard(index));
+const deck = Array(4).fill(null).map((_,index) =>createCard(index));
 const half = Math.ceil(deck.length / 2);
 
 const dealCards = ()=>{

@@ -85,3 +85,8 @@
   outline: 1px dashed black;
   background-color: #fafafa;
 }
+
+.card-name{
+  display: flex;
+  justify-content: center;
+}
